@@ -3,18 +3,16 @@ package com.dgtest.dgtest.services;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-@Qualifier("MathServiceImpl")
+@Qualifier("MathServiceMockImpl")
 @Service
-public class MathServiceImpl implements MathService {
+public class MathServiceMockImpl implements MathService {
     @Override
     public Integer AddNumbers(Integer firstNumber, Integer secondNumber) {
-        Integer sum = firstNumber + secondNumber;
-        return sum;
+        return 10;
     }
 
     @Override
     public Integer SubtractNumbers(Integer firstNumber, Integer secondNumber) {
-        Integer difference = firstNumber - secondNumber;
-        return difference;
+        return 5;
     }
 }
