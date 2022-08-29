@@ -1,0 +1,3 @@
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QNOTE: Validate that the Logger and the LoggerFactory classes are in the import org.slf4j libraries\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QThe ref attribute tells the application to use a logging appender named \"Console\".\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QIn one of the controlles (I chose _GreetingController), create a logger object as a\\E$"}

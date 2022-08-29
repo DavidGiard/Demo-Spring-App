@@ -1,5 +1,7 @@
 package com.dgtest.dgtest.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,8 @@ import com.dgtest.models.GreetingOutput;
 @RequestMapping("greetings")
 @RestController
 public class GreetingsController {
+    private Logger logger = LoggerFactory.getLogger(MathController.class);
+    
     @GetMapping("greet")
     public ResponseEntity<String> greet() {
         return new ResponseEntity<String>("Hello", HttpStatus.OK);
@@ -23,6 +27,13 @@ public class GreetingsController {
     @GetMapping("greet/{personName}")
     public ResponseEntity<String> greetPerson(@PathVariable("personName")String personName) {
         String greeting = "Hello, " + personName;
+
+        logger.trace("Hello" + personName);
+        logger.debug(personName +" is Tracy's mom!");
+        logger.info("Information, please, " + personName);
+        logger.warn("Warning! Warning! Warning! Dr, Smith, call " + personName);
+        logger.error(personName + " is exceptional!");
+
         return new ResponseEntity<String>(greeting, HttpStatus.OK);
     }
 
