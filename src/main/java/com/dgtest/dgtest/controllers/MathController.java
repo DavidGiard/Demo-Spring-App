@@ -2,11 +2,14 @@ package com.dgtest.dgtest.controllers;
 
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,14 +32,20 @@ public class MathController {
     @GetMapping("add/{firstNumber}/{secondNumber}")
     public ResponseEntity<Integer> Add(
         @PathVariable("firstNumber") Integer firstNumber, 
-        @PathVariable("secondNumber") Integer secondNumber) {
-
-            String requestKey = UUID.randomUUID().toString();
+        @PathVariable("secondNumber") Integer secondNumber,
+        HttpServletRequest request) {
+            String requestKey = request.getHeader("X-Request-Key");
+            if (requestKey == null) {
+                requestKey = UUID.randomUUID().toString();
+            }
             MDC.put("Request-Key", requestKey);
             logger.info("MathController.Add() called with " + firstNumber + " and " + secondNumber);
 
             Integer sum = mathService.AddNumbers(firstNumber, secondNumber);
-            return new ResponseEntity<Integer>(sum, HttpStatus.OK);
+
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("X-Request-Key", requestKey);
+            return new ResponseEntity<Integer>(sum, responseHeaders, HttpStatus.OK);
     }
 
     @GetMapping("subtract/{firstNumber}/{secondNumber}")
