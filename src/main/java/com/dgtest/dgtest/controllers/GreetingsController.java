@@ -17,7 +17,7 @@ import com.dgtest.models.GreetingOutput;
 @RequestMapping("greetings")
 @RestController
 public class GreetingsController {
-    private Logger logger = LoggerFactory.getLogger(MathController.class);
+    private Logger logger = LoggerFactory.getLogger(GreetingsController.class);
     
     @GetMapping("greet")
     public ResponseEntity<String> greet() {

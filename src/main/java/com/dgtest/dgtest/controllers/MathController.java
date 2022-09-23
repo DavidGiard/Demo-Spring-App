@@ -1,5 +1,10 @@
 package com.dgtest.dgtest.controllers;
 
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -15,6 +20,8 @@ import com.dgtest.dgtest.services.MathService;
 @RestController
 public class MathController {
 
+    private Logger logger = LoggerFactory.getLogger(MathController.class);
+
     @Autowired
     @Qualifier("MathServiceImpl")
     private MathService mathService;
@@ -23,6 +30,11 @@ public class MathController {
     public ResponseEntity<Integer> Add(
         @PathVariable("firstNumber") Integer firstNumber, 
         @PathVariable("secondNumber") Integer secondNumber) {
+
+            String requestKey = UUID.randomUUID().toString();
+            MDC.put("Request-Key", requestKey);
+            logger.info("MathController.Add() called with " + firstNumber + " and " + secondNumber);
+
             Integer sum = mathService.AddNumbers(firstNumber, secondNumber);
             return new ResponseEntity<Integer>(sum, HttpStatus.OK);
     }
