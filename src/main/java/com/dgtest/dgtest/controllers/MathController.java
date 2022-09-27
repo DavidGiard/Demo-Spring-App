@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dgtest.dgtest.models.AddNumbersInput;
 import com.dgtest.dgtest.models.AddNumbersOutput;
 import com.dgtest.dgtest.services.MathService;
+import com.exceptions.MissingArgumentsException;
 
 @RequestMapping("math")
 @RestController
@@ -37,7 +38,7 @@ public class MathController {
     public ResponseEntity<Integer> Add(
         @PathVariable("firstNumber") Integer firstNumber, 
         @PathVariable("secondNumber") Integer secondNumber,
-        HttpServletRequest request) {
+        HttpServletRequest request) throws MissingArgumentsException {
             String requestKey = request.getHeader("X-Request-Key");
             if (requestKey == null) {
                 requestKey = UUID.randomUUID().toString();
@@ -61,13 +62,16 @@ public class MathController {
     }
 
     @PostMapping(path="AddNumbers", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<AddNumbersOutput> AddNumbersPost(@RequestBody AddNumbersInput input) {
+    public ResponseEntity<AddNumbersOutput> AddNumbersPost(@RequestBody AddNumbersInput input) throws MissingArgumentsException {
         Integer firstNumber = input.getFirstNumber();
         Integer secondNumber = input.getSecondNumber();
         String personName = input.getPersonName();
 
-        if (firstNumber==null || secondNumber==null || personName==null) {
-            String message = "Missing input";
+        Integer sum = null;
+        try {
+            sum = mathService.AddNumbers(firstNumber, secondNumber);
+        } catch (Exception e) {
+            String message = e.getMessage();
             AddNumbersOutput output = new AddNumbersOutput(null, message);
             return new ResponseEntity<AddNumbersOutput>(output, HttpStatus.BAD_REQUEST);
         }
@@ -77,8 +81,7 @@ public class MathController {
             AddNumbersOutput output = new AddNumbersOutput(null, message);
             return new ResponseEntity<AddNumbersOutput>(output, HttpStatus.BAD_REQUEST);
         }
-        
-        Integer sum = mathService.AddNumbers(firstNumber, secondNumber);
+
         String message = "The sum of " + firstNumber + " and " + secondNumber 
             + " is " + sum + ",  " + personName;
         AddNumbersOutput output = new AddNumbersOutput(sum, message);
