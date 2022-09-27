@@ -14,9 +14,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dgtest.dgtest.models.AddNumbersInput;
+import com.dgtest.dgtest.models.AddNumbersOutput;
 import com.dgtest.dgtest.services.MathService;
 
 @RequestMapping("math")
@@ -54,5 +58,30 @@ public class MathController {
         @PathVariable("secondNumber") Integer secondNumber) {
             Integer difference = mathService.SubtractNumbers(firstNumber, secondNumber);
             return new ResponseEntity<Integer>(difference, HttpStatus.OK);
+    }
+
+    @PostMapping(path="AddNumbers", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<AddNumbersOutput> AddNumbersPost(@RequestBody AddNumbersInput input) {
+        Integer firstNumber = input.getFirstNumber();
+        Integer secondNumber = input.getSecondNumber();
+        String personName = input.getPersonName();
+
+        if (firstNumber==null || secondNumber==null || personName==null) {
+            String message = "Missing input";
+            AddNumbersOutput output = new AddNumbersOutput(null, message);
+            return new ResponseEntity<AddNumbersOutput>(output, HttpStatus.BAD_REQUEST);
+        }
+
+        if (personName.compareTo("Bob")==0) {
+            String message = "Bob is not welcome here";
+            AddNumbersOutput output = new AddNumbersOutput(null, message);
+            return new ResponseEntity<AddNumbersOutput>(output, HttpStatus.BAD_REQUEST);
+        }
+        
+        Integer sum = mathService.AddNumbers(firstNumber, secondNumber);
+        String message = "The sum of " + firstNumber + " and " + secondNumber 
+            + " is " + sum + ",  " + personName;
+        AddNumbersOutput output = new AddNumbersOutput(sum, message);
+        return new ResponseEntity<AddNumbersOutput>(output, HttpStatus.OK);
     }
 }
