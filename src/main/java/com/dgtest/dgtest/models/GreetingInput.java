@@ -1,4 +1,4 @@
-package com.dgtest.models;
+package com.dgtest.dgtest.models;
 public class GreetingInput {
     public GreetingInput(String personName) {
         this.personName = personName;

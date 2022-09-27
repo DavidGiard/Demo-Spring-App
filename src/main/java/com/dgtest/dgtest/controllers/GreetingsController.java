@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dgtest.models.GreetingInput;
-import com.dgtest.models.GreetingOutput;
+import com.dgtest.dgtest.models.GreetingInput;
+import com.dgtest.dgtest.models.GreetingOutput;
 
 @RequestMapping("greetings")
 @RestController

@@ -1,4 +1,4 @@
-package com.exceptions;
+package com.dgtest.dgtest.exceptions;
 
 public class MissingArgumentsException extends Exception {
     public MissingArgumentsException(String errorMessage) {

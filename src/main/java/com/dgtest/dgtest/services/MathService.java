@@ -1,6 +1,6 @@
 package com.dgtest.dgtest.services;
 
-import com.exceptions.MissingArgumentsException;
+import com.dgtest.dgtest.exceptions.MissingArgumentsException;
 
 public interface MathService {
     Integer AddNumbers(Integer firstNumber, Integer secondNumber) throws MissingArgumentsException;

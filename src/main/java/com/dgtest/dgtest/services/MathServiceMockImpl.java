@@ -3,7 +3,7 @@ package com.dgtest.dgtest.services;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.exceptions.MissingArgumentsException;
+import com.dgtest.dgtest.exceptions.MissingArgumentsException;
 
 @Qualifier("MathServiceMockImpl")
 @Service

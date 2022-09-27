@@ -1,4 +1,4 @@
-package com.dgtest.models;
+package com.dgtest.dgtest.models;
 public class GreetingOutput {
     public GreetingOutput(String greeting) {
         this.greeting = greeting;

@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dgtest.dgtest.exceptions.MissingArgumentsException;
 import com.dgtest.dgtest.models.AddNumbersInput;
 import com.dgtest.dgtest.models.AddNumbersOutput;
 import com.dgtest.dgtest.models.DivideNumbersInput;
 import com.dgtest.dgtest.models.DivideNumbersOutput;
 import com.dgtest.dgtest.services.MathService;
-import com.exceptions.MissingArgumentsException;
 
 @RequestMapping("math")
 @RestController
@@ -95,20 +95,7 @@ public class MathController {
         Integer firstNumber = input.getFirstNumber();
         Integer secondNumber = input.getSecondNumber();
         String personName = input.getPersonName();
-
-        Integer quotient = null;
-        try {
-            quotient = mathService.DivideNumbers(firstNumber, secondNumber);
-        } catch (ArithmeticException e) {
-            String message = "An error has occurred, " + personName + ": " + e.getMessage();
-            DivideNumbersOutput output = new DivideNumbersOutput(null, message);
-            return new ResponseEntity<DivideNumbersOutput>(output, HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            String message = "An error has occurred, " + personName + ": " + e.getMessage();
-            DivideNumbersOutput output = new DivideNumbersOutput(null, message);
-            return new ResponseEntity<DivideNumbersOutput>(output, HttpStatus.BAD_REQUEST);
-        }
-
+        Integer quotient = mathService.DivideNumbers(firstNumber, secondNumber);
         String message = firstNumber + " divided by " + secondNumber 
             + " is " + quotient + ", " + personName;
         DivideNumbersOutput output = new DivideNumbersOutput(quotient, message);
