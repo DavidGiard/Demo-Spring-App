@@ -4,10 +4,10 @@ public class MathOutput {
     private Integer result;
     private String message;
 
-    public Integer getQuotient() {
+    public Integer getResult() {
         return result;
     }
-    public void setQuotient(Integer result) {
+    public void setResult(Integer result) {
         this.result = result;
     }
 
