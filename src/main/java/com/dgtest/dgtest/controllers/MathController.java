@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dgtest.dgtest.models.AddNumbersInput;
 import com.dgtest.dgtest.models.AddNumbersOutput;
+import com.dgtest.dgtest.models.DivideNumbersInput;
+import com.dgtest.dgtest.models.DivideNumbersOutput;
 import com.dgtest.dgtest.services.MathService;
 import com.exceptions.MissingArgumentsException;
 
@@ -86,5 +88,30 @@ public class MathController {
             + " is " + sum + ",  " + personName;
         AddNumbersOutput output = new AddNumbersOutput(sum, message);
         return new ResponseEntity<AddNumbersOutput>(output, HttpStatus.OK);
+    }
+
+    @PostMapping(path="DivideNumbers", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<DivideNumbersOutput> DivideNumbersPost(@RequestBody DivideNumbersInput input) throws MissingArgumentsException {
+        Integer firstNumber = input.getFirstNumber();
+        Integer secondNumber = input.getSecondNumber();
+        String personName = input.getPersonName();
+
+        Integer quotient = null;
+        try {
+            quotient = mathService.DivideNumbers(firstNumber, secondNumber);
+        } catch (ArithmeticException e) {
+            String message = "An error has occurred, " + personName + ": " + e.getMessage();
+            DivideNumbersOutput output = new DivideNumbersOutput(null, message);
+            return new ResponseEntity<DivideNumbersOutput>(output, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            String message = "An error has occurred, " + personName + ": " + e.getMessage();
+            DivideNumbersOutput output = new DivideNumbersOutput(null, message);
+            return new ResponseEntity<DivideNumbersOutput>(output, HttpStatus.BAD_REQUEST);
+        }
+
+        String message = firstNumber + " divided by " + secondNumber 
+            + " is " + quotient + ", " + personName;
+        DivideNumbersOutput output = new DivideNumbersOutput(quotient, message);
+        return new ResponseEntity<DivideNumbersOutput>(output, HttpStatus.OK);
     }
 }

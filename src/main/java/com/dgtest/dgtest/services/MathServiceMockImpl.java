@@ -17,4 +17,10 @@ public class MathServiceMockImpl implements MathService {
     public Integer SubtractNumbers(Integer firstNumber, Integer secondNumber) {
         return 5;
     }
+
+    @Override
+    public Integer DivideNumbers(Integer firstNumber, Integer secondNumber) {
+        return 10;
+    }
+    
 }

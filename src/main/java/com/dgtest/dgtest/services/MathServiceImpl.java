@@ -30,4 +30,10 @@ public class MathServiceImpl implements MathService {
         Integer difference = firstNumber - secondNumber;
         return difference;
     }
+
+    @Override
+    public Integer DivideNumbers(Integer firstNumber, Integer secondNumber){
+        Integer quotient = firstNumber / secondNumber;
+        return quotient;
+    }
 }
